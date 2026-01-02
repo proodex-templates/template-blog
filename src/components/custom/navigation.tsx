@@ -1,29 +1,46 @@
-// components/MobileNav.tsx
-'use client';
+"use client";
 
-import { Menu, X } from 'lucide-react';
-import { useState } from 'react';
-import Link from 'next/link';
+import * as React from "react";
+import { LinkWrapper } from "@/components/ui/link-wrapper";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
+import { SITE_CONFIG } from "@/config/variables";
 
+// Define the links for the navigation
+const navLinks = [
+  { href: "/", label: "Home" },
+  { href: "/blog", label: "Blog" },
+  { href: "/about", label: "About" },
+  { href: "/contact", label: "Contact" },
+];
+
+/**
+ * Navigation component used in the header.
+ * This is a global component defined in components/custom.
+ */
 export function Navigation() {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggleMenu = () => setIsOpen(!isOpen);
+  const pathname = usePathname();
 
   return (
-    <div className="md:hidden">
-      <button onClick={toggleMenu} className="p-2">
-        {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-      </button>
-      {isOpen && (
-        <div className="absolute top-16 left-0 w-full bg-white dark:bg-gray-900 shadow-md z-50">
-          <nav className="flex flex-col space-y-4 p-4">
-            <Link href="/" onClick={toggleMenu}>Home</Link>
-            <Link href="/blog" onClick={toggleMenu}>Blog</Link>
-            <Link href="/contact" onClick={toggleMenu}>Contact</Link>
-          </nav>
-        </div>
-      )}
-    </div>
+    <nav>
+      <p>Testing this one</p>
+      <ul className="flex space-x-4 md:space-x-6">
+        {navLinks.map((link) => (
+          <li key={link.href}>
+            <LinkWrapper
+              href={link.href}
+              className={cn(
+                "text-sm font-medium transition-colors hover:text-primary",
+                pathname === link.href
+                  ? "text-primary border-b-2 border-primary pb-1"
+                  : "text-muted-foreground"
+              )}
+            >
+              <p>{link.label}</p>
+            </LinkWrapper>
+          </li>
+        ))}
+      </ul>
+    </nav>
   );
-};
+}
