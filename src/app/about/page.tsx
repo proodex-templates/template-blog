@@ -1,10 +1,12 @@
-// src/pages/about.tsx
+import * as React from "react";
+import { AboutHeroSection } from "./sections/about-hero-section";
+import { MissionSection } from "./sections/mission-section";
 
 export default function AboutPage() {
   return (
-      <div className="p-4 max-w-3xl mx-auto">
-        <h1 className="text-2xl font-bold">About Us</h1>
-        <p>All about this site...</p>
-      </div>
+    <div className="flex flex-col">
+      <AboutHeroSection />
+      <MissionSection />
+    </div>
   );
 }
